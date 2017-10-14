@@ -5,8 +5,8 @@ PREVIEW - Not all functionally fully working yet!
 
 Still working on:
 
- - Fixing bugs in GRIB2 processing.
- - Image operations / MP4 loop creator (ModelImageOps.java)
+ - Fixing any remaining bugs in GRIB2 processing.
+ - Add several models to image operations / MP4 loop creator (ModelImageOps.java)
  - Worker controller (ModelWorker.java)
  - Main controller (Models.java)
 
