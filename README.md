@@ -17,4 +17,6 @@ MyDBConnector = simple MySQL database connector. You can find examples using Goo
 
 wgrib2, g2ctl, gribmap, get_grib.pl, get_inv.pl, grads - can all be found through Google as well. I do not own the code, so I am not including it.
 
-You pretty much must have a bleeding edge system - AT LEAST 16 GB if not 32 GB of RAM is necessary. I upgraded to 32 GB because of my "older" Bash iteration of this.
+You pretty much must have a bleeding edge system - AT LEAST 16 GB if not 32 GB of RAM and a Core i7 4790k (8x4GHz) or better is necessary. I upgraded to 32 GB because of my "older" Bash iteration of this.
+
+* Somewhere down the road I may make use of the nVidia CUDA Java Libraries.
