@@ -16,3 +16,5 @@ A fast Internet connection is required. And unlimited data. Be warned. This "pro
 MyDBConnector = simple MySQL database connector. You can find examples using Google.
 
 wgrib2, g2ctl, gribmap, get_grib.pl, get_inv.pl, grads - can all be found through Google as well. I do not own the code, so I am not including it.
+
+You pretty much must have a bleeding edge system - AT LEAST 16 GB if not 32 GB of RAM is necessary. I upgraded to 32 GB because of this.
