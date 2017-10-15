@@ -113,7 +113,7 @@ public class ModelImageOps {
 			Thread io6b = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("bash "+helpers.getPath()+"/Sequence.sh "+memGFS.getPath()+" png"); }});
 			Thread io6c = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("bash "+helpers.getPath()+"/Sequence.sh "+memHRWA.getPath()+" png"); }});
 			Thread io6d = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("bash "+helpers.getPath()+"/Sequence.sh "+memHRWN.getPath()+" png"); }});
-			Thread io6Pool[] = { io6a, io6b, io5c, io5d }; 
+			Thread io6Pool[] = { io6a, io6b, io6c, io6d }; 
 			for (Thread thread : io6Pool) { thread.start(); }
 			for (int i = 0; i < io6Pool.length; i++) { try { io6Pool[i].join(); } catch (InterruptedException nx) { nx.printStackTrace(); } }
 
