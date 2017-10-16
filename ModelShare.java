@@ -75,7 +75,7 @@ public class ModelShare {
 	public static String jsonMerge(String modelName) {
 		String thisJSON = null;
 		try { thisJSON = StumpJunk.runProcessOutVar("cat "+xml2Path.getPath()+"/"+modelName+"Out*.json"); } catch (IOException ix) { ix.printStackTrace(); }
-		thisJSON = ("{"+thisJSON+"}").replace("\n","").replace(",}", "}");
+		thisJSON = ("{"+thisJSON+"}").replace("\n","").replace(",}", "}").replace("{,","");
 		return thisJSON;
 	}
 		
