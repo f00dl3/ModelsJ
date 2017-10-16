@@ -3,8 +3,8 @@
 Models core class
 
 Conceived 9/22/2017
-Last updated 10/15/2017
-Status: Non-production
+Last updated 10/16/2017
+Status: Production
 
 Completed: GFS, CMC, HRRR, HRWA, HRWN, NAM
 
@@ -115,19 +115,19 @@ public class Models {
 		if(getHour.equals("00") || getHour.equals("06") || getHour.equals("12") || getHour.equals("18")) {
 			String gfsJSONString = ModelShare.jsonMerge("gfs");
 			String namJSONString = ModelShare.jsonMerge("nam");
-			String hrwaJSONString = ModelShare.jsonMerge("hrwa");
-			String hrwnJSONString = ModelShare.jsonMerge("hrwn");
 			if(getHour.equals("00") || getHour.equals("12")) {
 				String cmcJSONString = ModelShare.jsonMerge("cmc");
-				mSQLIndex = "INSERT INTO WxObs.MOS_Index_J (RunString, GFS, NAM, RAP, CMC, HRRR, HRWA, HRWN) VALUES ('"+modelRunString+"',1,1,0,1,1,1,1);";
-				mSQLQuery = "INSERT INTO WxObs.KOJC_MFMD_J (RunString, GFS, NAM, CMC, HRRR, HRWA, HRWN) VALUES ('"+modelRunString+"','"+gfsJSONString+"','"+namJSONString+"','"+cmcJSONString+"','"+hrrrJSONString+"','"+hrwaJSONString+"','"+hrwnJSONString+"');";
+				String hrwaJSONString = ModelShare.jsonMerge("hrwa");
+				String hrwnJSONString = ModelShare.jsonMerge("hrwn");
+				mSQLIndex = "INSERT INTO WxObs.MOS_Index (RunString, GFS, NAM4KM, RAP, CMC, HRRR, HRWA, HRWN) VALUES ('"+modelRunString+"',1,1,0,1,1,1,1);";
+				mSQLQuery = "INSERT INTO WxObs.KOJC_MFMD (RunString, GFS, NAM, CMC, HRRR, HRWA, HRWN) VALUES ('"+modelRunString+"','"+gfsJSONString+"','"+namJSONString+"','"+cmcJSONString+"','"+hrrrJSONString+"','"+hrwaJSONString+"','"+hrwnJSONString+"');";
 			} else {
-				mSQLIndex = "INSERT INTO WxObs.MOS_Index_J (RunString, GFS, NAM, RAP, CMC, HRRR, HRWA, HRWN) VALUES ('"+modelRunString+"',1,1,0,0,1,1,1);";
-				mSQLQuery = "INSERT INTO WxObs.KOJC_MFMD_J (RunString, GFS, NAM, HRRR, HRWA, HRWN) VALUES ('"+modelRunString+"','"+gfsJSONString+"','"+namJSONString+"','"+hrrrJSONString+"','"+hrwaJSONString+"','"+hrwnJSONString+"');";
+				mSQLIndex = "INSERT INTO WxObs.MOS_Index (RunString, GFS, NAM4KM, RAP, CMC, HRRR, HRWA, HRWN) VALUES ('"+modelRunString+"',1,1,0,0,1,0,0);";
+				mSQLQuery = "INSERT INTO WxObs.KOJC_MFMD (RunString, GFS, NAM, HRRR) VALUES ('"+modelRunString+"','"+gfsJSONString+"','"+namJSONString+"','"+hrrrJSONString+"');";
 			}
 		} else {
-			mSQLIndex = "INSERT INTO WxObs.MOS_Index_J (RunString, GFS, NAM, RAP, CMC, HRRR, HRWA, HRWN) VALUES ('"+modelRunString+"',0,0,0,0,1,0,0);";
-			mSQLQuery = "INSERT INTO WxObs.KOJC_MFMD_J (RunString, HRRR) VALUES ('"+modelRunString+"','"+hrrrJSONString+"');";
+			mSQLIndex = "INSERT INTO WxObs.MOS_Index (RunString, GFS, NAM4KM, RAP, CMC, HRRR, HRWA, HRWN) VALUES ('"+modelRunString+"',0,0,0,0,1,0,0);";
+			mSQLQuery = "INSERT INTO WxObs.KOJC_MFMD (RunString, HRRR) VALUES ('"+modelRunString+"','"+hrrrJSONString+"');";
 		}
 		
 		String mSQLDumper = mSQLIndex + "\n" + mSQLQuery;
