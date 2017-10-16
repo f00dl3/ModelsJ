@@ -320,7 +320,7 @@ public class ModelWorkerCMC {
 			if(tPRATE != 0.0001) { cmcJSON.put("PRATE_"+tFHour, tPRATE*0.03937); }
 			if(tHGT500 != 0.0001) { cmcJSON.put("HGT500_"+tFHour, tHGT500); }
 			
-			StumpJunk.runProcess("(echo \"run "+helpers.getPath()+"/ModelData.gs "+modelName+" "+tFHour4D+" "+getDate+" "+getHour+" "+xml2Path.getPath()+"\" | grads -blc \"open "+tFHCtlFile.getPath()+"\")");
+			StumpJunk.runProcess("(echo \"run "+helpers.getPath()+"/ModelData.gs "+modelName+" "+tFHour4D+" "+getDate+" "+getHour+" "+xml2Path.getPath()+"\" | "+appPath.getPath()+"/grads -blc \"open "+tFHCtlFile.getPath()+"\")");
 			
 			tFHGlob.delete();
 			
