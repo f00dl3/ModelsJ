@@ -333,7 +333,7 @@ public class ModelWorkerHRWN {
 			if(tWS950 != 0.0001) { hrwnJSON.put("WS950_"+tFHour, tWS950); }
 			if(tWS1000 != 0.0001) { hrwnJSON.put("WS1000_"+tFHour, tWS1000); }
 					
-			StumpJunk.runProcess("(echo \"run "+helpers.getPath()+"/ModelData.gs "+modelName+" "+tFHour4D+" "+getDate+" "+getHour+" "+xml2Path.getPath()+"\" | grads -blc \"open "+tFHCtlFile.getPath()+"\")");								
+			StumpJunk.runProcess("(echo \"run "+helpers.getPath()+"/ModelData.gs "+modelName+" "+tFHour4D+" "+getDate+" "+getHour+" "+xml2Path.getPath()+"\" | "+appPath.getPath()+"/grads -blc \"open "+tFHCtlFile.getPath()+"\")");								
 			
 			tFHGlob.delete();
 			
