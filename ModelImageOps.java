@@ -52,7 +52,7 @@ public class ModelImageOps {
 
 		StumpJunk.runProcess("rm "+wwwOutImages.getPath()+"/*.png");
 		StumpJunk.runProcess("mogrify -format png -gravity center -crop "+stdRes+"+0+0 "+memHRRR.getPath()+"/*.png");
-		StumpJunk.runProcess("mv "+memHRRR.getPath()+"/*.png "+wwwOutImages.getPath());
+		StumpJunk.runProcess("cv "+memHRRR.getPath()+"/*.png "+wwwOutImages.getPath());
 
 		Thread io2a = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("bash "+helpers.getPath()+"/Sequence.sh "+memHRRR.getPath()+" png"); }});
 		Thread io2b = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("bash "+helpers.getPath()+"/Sequence.sh "+memHRRRFocus.getPath()+" png"); }});
@@ -71,77 +71,94 @@ public class ModelImageOps {
 			final File wwwOutImages4 = new File(wwwOutBase+"/MergedJ/Images4");
 			final File memGFS = new File(xml2Path.getPath()+"/tmpic/GFS");
 			final File memNAM = new File(xml2Path.getPath()+"/tmpic/NAM");
-			final File memHRWA = new File(xml2Path.getPath()+"/tmpic/HRWA");
-			final File memHRWN = new File(xml2Path.getPath()+"/tmpic/HRWN");
 			final File namMP4 = new File(xml2Path.getPath()+"/NAM_Loop.mp4");
 			final File gfsMP4 = new File(xml2Path.getPath()+"/GFS_Loop.mp4");
-			final File hrwaMP4 = new File(xml2Path.getPath()+"/HRWA_Loop.mp4");
-			final File hrwnMP4 = new File(xml2Path.getPath()+"/HRWN_Loop.mp4");
 
 			memGFS.mkdirs();
 			memNAM.mkdirs();
-			memHRWA.mkdirs();
-			memHRWN.mkdirs();
 			wwwOutImages4.mkdirs();
 			
 			gfsMP4.delete();
 			namMP4.delete();
-			hrwaMP4.delete();
-			hrwnMP4.delete();
-
+			
 			Thread io4a = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("mv "+xml2Path.getPath()+"/*NAM_* "+memNAM.getPath()); }});
 			Thread io4b = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("mv "+xml2Path.getPath()+"/*GFS_* "+memGFS.getPath()); }});
-			Thread io4c = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("mv "+xml2Path.getPath()+"/*HRWA_* "+memHRWA.getPath()); }});
-			Thread io4d = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("mv "+xml2Path.getPath()+"/*HRWN_* "+memHRWN.getPath()); }});
-			Thread io4Pool[] = { io4a, io4b, io4c, io4d }; 
+			Thread io4Pool[] = { io4a, io4b }; 
 			for (Thread thread : io4Pool) { thread.start(); }
 			for (int i = 0; i < io4Pool.length; i++) { try { io4Pool[i].join(); } catch (InterruptedException nx) { nx.printStackTrace(); } }
 
 			StumpJunk.runProcess("rm "+wwwOutImages4.getPath()+"/*.png");
 			StumpJunk.runProcess("mogrify -format png -gravity center -crop "+stdRes+"+0+0 "+memNAM.getPath()+"/*.png");
 			StumpJunk.runProcess("mogrify -format png -gravity center -crop "+stdRes+"+0+0 "+memGFS.getPath()+"/*.png");
-			StumpJunk.runProcess("mogrify -format png -gravity center -crop "+stdRes+"+0+0 "+memHRWA.getPath()+"/*.png");
-			StumpJunk.runProcess("mogrify -format png -gravity center -crop "+stdRes+"+0+0 "+memHRWN.getPath()+"/*.png");
 
-			Thread io5a = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("mv "+memNAM.getPath()+"/*.png "+wwwOutImages4.getPath()); }});
-			Thread io5b = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("mv "+memGFS.getPath()+"/*.png "+wwwOutImages4.getPath()); }});
-			Thread io5c = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("mv "+memHRWA.getPath()+"/*.png "+wwwOutImages4.getPath()); }});
-			Thread io5d = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("mv "+memHRWN.getPath()+"/*.png "+wwwOutImages4.getPath()); }});
-			Thread io5Pool[] = { io5a, io5b, io5c, io5d }; 
+			Thread io5a = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("cp "+memNAM.getPath()+"/*.png "+wwwOutImages4.getPath()); }});
+			Thread io5b = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("cp "+memGFS.getPath()+"/*.png "+wwwOutImages4.getPath()); }});
+			Thread io5Pool[] = { io5a, io5b }; 
 			for (Thread thread : io5Pool) { thread.start(); }
 			for (int i = 0; i < io5Pool.length; i++) { try { io5Pool[i].join(); } catch (InterruptedException nx) { nx.printStackTrace(); } }
 
 			Thread io6a = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("bash "+helpers.getPath()+"/Sequence.sh "+memNAM.getPath()+" png"); }});
 			Thread io6b = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("bash "+helpers.getPath()+"/Sequence.sh "+memGFS.getPath()+" png"); }});
-			Thread io6c = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("bash "+helpers.getPath()+"/Sequence.sh "+memHRWA.getPath()+" png"); }});
-			Thread io6d = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("bash "+helpers.getPath()+"/Sequence.sh "+memHRWN.getPath()+" png"); }});
-			Thread io6Pool[] = { io6a, io6b, io6c, io6d }; 
+			Thread io6Pool[] = { io6a, io6b }; 
 			for (Thread thread : io6Pool) { thread.start(); }
 			for (int i = 0; i < io6Pool.length; i++) { try { io6Pool[i].join(); } catch (InterruptedException nx) { nx.printStackTrace(); } }
 
 			Thread io7a = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("ffmpeg -threads 8 -r 10 -i "+memNAM.getPath()+"/%05d.png -vcodec libx264 -pix_fmt yuv420p "+namMP4.getPath()); }});
 			Thread io7b = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("ffmpeg -threads 8 -r 10 -i "+memGFS.getPath()+"/%05d.png -vcodec libx264 -pix_fmt yuv420p "+gfsMP4.getPath()); }});
-			Thread io7c = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("ffmpeg -threads 8 -r 10 -i "+memHRWA.getPath()+"/%05d.png -vcodec libx264 -pix_fmt yuv420p "+hrwaMP4.getPath()); }});
-			Thread io7d = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("ffmpeg -threads 8 -r 10 -i "+memHRWN.getPath()+"/%05d.png -vcodec libx264 -pix_fmt yuv420p "+hrwnMP4.getPath()); }});
-			Thread io7Pool[] = { io7a, io7b, io7c, io7d }; 
+			Thread io7Pool[] = { io7a, io7b }; 
 			for (Thread thread : io7Pool) { thread.start(); }
 			for (int i = 0; i < io7Pool.length; i++) { try { io7Pool[i].join(); } catch (InterruptedException nx) { nx.printStackTrace(); } }
 
 			if(getHour.equals("00") || getHour.equals("12")) {
 
 				final File memCMC = new File(xml2Path.getPath()+"/tmpic/CMC");	
+				final File memHRWA = new File(xml2Path.getPath()+"/tmpic/HRWA");
+				final File memHRWN = new File(xml2Path.getPath()+"/tmpic/HRWN");
 				final File cmcMP4 = new File(xml2Path.getPath()+"/CMC_Loop.mp4");
+				final File hrwaMP4 = new File(xml2Path.getPath()+"/HRWA_Loop.mp4");
+				final File hrwnMP4 = new File(xml2Path.getPath()+"/HRWN_Loop.mp4");
 
 				memCMC.mkdirs();
+				memHRWA.mkdirs();
+				memHRWN.mkdirs();
+				
 				cmcMP4.delete();
+				hrwaMP4.delete();
+				hrwnMP4.delete();
 
-				StumpJunk.runProcess("mv "+xml2Path.getPath()+"/*CMC_* "+memCMC.getPath());
+				Thread io8a = new Thread(new Runnable() { public void run() {  StumpJunk.runProcess("mv "+xml2Path.getPath()+"/*CMC_* "+memCMC.getPath()); }});
+				Thread io8b = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("mv "+xml2Path.getPath()+"/*HRWA_* "+memHRWA.getPath()); }});
+				Thread io8c = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("mv "+xml2Path.getPath()+"/*HRWN_* "+memHRWN.getPath()); }});
+				Thread io8Pool[] = { io8a, io8b, io8c }; 
+				for (Thread thread : io8Pool) { thread.start(); }
+				for (int i = 0; i < io8Pool.length; i++) { try { io8Pool[i].join(); } catch (InterruptedException nx) { nx.printStackTrace(); } }
+								
 				StumpJunk.runProcess("mogrify -format png -gravity center -crop "+stdRes+"+0+0 "+memCMC.getPath()+"/*.png");
-				StumpJunk.runProcess("bash "+helpers.getPath()+"/Sequence.sh "+memCMC.getPath()+" png");
-				StumpJunk.runProcess("ffmpeg -threads 8 -r 10 -i "+memCMC.getPath()+"/%05d.png -vcodec libx264 -pix_fmt yuv420p "+cmcMP4.getPath());
+				StumpJunk.runProcess("mogrify -format png -gravity center -crop "+stdRes+"+0+0 "+memHRWA.getPath()+"/*.png");
+				StumpJunk.runProcess("mogrify -format png -gravity center -crop "+stdRes+"+0+0 "+memHRWN.getPath()+"/*.png");
+				
+				Thread io9a = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("cp "+memCMC.getPath()+"/*.png "+wwwOutImages4.getPath()); }});
+				Thread io9b = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("cp "+memHRWA.getPath()+"/*.png "+wwwOutImages4.getPath()); }});
+				Thread io9c = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("cp "+memHRWN.getPath()+"/*.png "+wwwOutImages4.getPath()); }});
+				Thread io9Pool[] = { io9a, io9b, io9c }; 
+				for (Thread thread : io9Pool) { thread.start(); }
+				for (int i = 0; i < io9Pool.length; i++) { try { io9Pool[i].join(); } catch (InterruptedException nx) { nx.printStackTrace(); } }
+			
+				Thread io10a = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("bash "+helpers.getPath()+"/Sequence.sh "+memCMC.getPath()+" png"); }});
+				Thread io10b = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("bash "+helpers.getPath()+"/Sequence.sh "+memHRWA.getPath()+" png"); }});
+				Thread io10c = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("bash "+helpers.getPath()+"/Sequence.sh "+memHRWN.getPath()+" png"); }});
+				Thread io10Pool[] = { io10a, io10b, io10c }; 
+				for (Thread thread : io10Pool) { thread.start(); }
+				for (int i = 0; i < io10Pool.length; i++) { try { io10Pool[i].join(); } catch (InterruptedException nx) { nx.printStackTrace(); } }
+							
+				Thread io11a = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("ffmpeg -threads 8 -r 10 -i "+memCMC.getPath()+"/%05d.png -vcodec libx264 -pix_fmt yuv420p "+cmcMP4.getPath()); }});
+				Thread io11b = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("ffmpeg -threads 8 -r 10 -i "+memHRWA.getPath()+"/%05d.png -vcodec libx264 -pix_fmt yuv420p "+hrwaMP4.getPath()); }});
+				Thread io11c = new Thread(new Runnable() { public void run() { StumpJunk.runProcess("ffmpeg -threads 8 -r 10 -i "+memHRWN.getPath()+"/%05d.png -vcodec libx264 -pix_fmt yuv420p "+hrwnMP4.getPath()); }});
+				Thread io11Pool[] = { io11a, io11b, io11c }; 
+				for (Thread thread : io11Pool) { thread.start(); }
+				for (int i = 0; i < io11Pool.length; i++) { try { io11Pool[i].join(); } catch (InterruptedException nx) { nx.printStackTrace(); } }
 
 			}
-
 
 		}
 
