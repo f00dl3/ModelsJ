@@ -1,8 +1,8 @@
 # ModelsJ
 Java Model Data Processor
 
-Beta
-2017-10-15
+Production
+2017-10-16
 
 Still working on:
 
