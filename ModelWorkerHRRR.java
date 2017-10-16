@@ -355,7 +355,7 @@ public class ModelWorkerHRRR {
 			
 			StumpJunk.runProcess("(echo \"run "+helpers.getPath()+"/ModelData.gs "+modelName+" "+tFHour4D+" "+getDate+" "+getHour+" "+xml2Path.getPath()+"\" | "+appPath.getPath()+"/grads -blc \"open "+tFXCtlFile.getPath()+"\")");
 		
-			/* tFHGlob.delete(); */
+			tFHGlob.delete();
 		
 		}
 			
