@@ -41,7 +41,7 @@ public class ModelWorkerHRWA {
 
 		int iterk = 0;
 		int gribSpot = 3;
-		int iSx = 1;
+		int iSx = 11;
 		int iSs = 3;
 		
 		JSONObject hrwaJSON = new JSONObject();
@@ -125,6 +125,11 @@ public class ModelWorkerHRWA {
 			double tWV800 = 0.001; double tWV850 = 0.001;
 			double tWV900 = 0.001; double tWV950 = 0.001;
 			double tWV1000 = 0.001; double tWV0 = 0.001;
+
+			double tCAPE = 0.001; double tCIN = 0.001;
+			double tPRATE = 0.001; double tHGT500 = 0.001;
+			double tPWAT = 0.001;
+			double tLI = 0.001;
 		
 			Scanner hrwaScanner = null; try {		
 				hrwaScanner = new Scanner(sounding);
@@ -150,7 +155,7 @@ public class ModelWorkerHRWA {
 					if(line.startsWith(((iSx+0)+(iSs*16)+1)+":")) { String[] lineTmp = line.split(","); try { tTC900 = Double.parseDouble(lineTmp[gribSpot].replace("val=", ""))-273.15; } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
 					if(line.startsWith(((iSx+0)+(iSs*17)+1)+":")) { String[] lineTmp = line.split(","); try { tTC950 = Double.parseDouble(lineTmp[gribSpot].replace("val=", ""))-273.15; } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
 					if(line.startsWith(((iSx+0)+(iSs*18)+1)+":")) { String[] lineTmp = line.split(","); try { tTC1000 = Double.parseDouble(lineTmp[gribSpot].replace("val=", ""))-273.15; } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith("60:")) { String[] lineTmp = line.split(","); try { tTC0 = Double.parseDouble(lineTmp[gribSpot].replace("val=", ""))-273.15; } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith("1:")) { String[] lineTmp = line.split(","); try { tTC0 = Double.parseDouble(lineTmp[gribSpot].replace("val=", ""))-273.15; } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
 			
 					if(line.startsWith(((iSx+1)+(iSs*0))+":")) { String[] lineTmp = line.split(","); try { tRH100 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
 					if(line.startsWith(((iSx+1)+(iSs*1))+":")) { String[] lineTmp = line.split(","); try { tRH150 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
@@ -171,50 +176,57 @@ public class ModelWorkerHRWA {
 					if(line.startsWith(((iSx+1)+(iSs*16)+1)+":")) { String[] lineTmp = line.split(","); try { tRH900 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
 					if(line.startsWith(((iSx+1)+(iSs*17)+1)+":")) { String[] lineTmp = line.split(","); try { tRH950 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
 					if(line.startsWith(((iSx+1)+(iSs*18)+1)+":")) { String[] lineTmp = line.split(","); try { tRH1000 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith("61:")) { String[] lineTmp = line.split(","); try { tRH0 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith("2:")) { String[] lineTmp = line.split(","); try { tRH0 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
 
-					if(line.startsWith(((iSx+3)+(iSs*0))+".1:")) { String[] lineTmp = line.split(","); try { tWU100 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*1))+".1:")) { String[] lineTmp = line.split(","); try { tWU150 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*2))+".1:")) { String[] lineTmp = line.split(","); try { tWU200 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*3))+".1:")) { String[] lineTmp = line.split(","); try { tWU250 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*4))+".1:")) { String[] lineTmp = line.split(","); try { tWU300 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*5))+".1:")) { String[] lineTmp = line.split(","); try { tWU350 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*6))+".1:")) { String[] lineTmp = line.split(","); try { tWU400 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*7))+".1:")) { String[] lineTmp = line.split(","); try { tWU450 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*8)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU500 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*9)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU550 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*10)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU600 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*11)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU650 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*12)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU700 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*13)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU750 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*14)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU800 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*15)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU850 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*16)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU900 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*17)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU950 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+3)+(iSs*18)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU1000 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith("62.1:")) { String[] lineTmp = line.split(","); try { tWU0 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*0))+".1:")) { String[] lineTmp = line.split(","); try { tWU100 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*1))+".1:")) { String[] lineTmp = line.split(","); try { tWU150 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*2))+".1:")) { String[] lineTmp = line.split(","); try { tWU200 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*3))+".1:")) { String[] lineTmp = line.split(","); try { tWU250 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*4))+".1:")) { String[] lineTmp = line.split(","); try { tWU300 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*5))+".1:")) { String[] lineTmp = line.split(","); try { tWU350 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*6))+".1:")) { String[] lineTmp = line.split(","); try { tWU400 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*7))+".1:")) { String[] lineTmp = line.split(","); try { tWU450 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*8)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU500 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*9)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU550 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*10)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU600 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*11)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU650 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*12)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU700 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*13)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU750 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*14)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU800 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*15)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU850 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*16)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU900 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*17)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU950 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*18)+1)+".1:")) { String[] lineTmp = line.split(","); try { tWU1000 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith("3.1:")) { String[] lineTmp = line.split(","); try { tWU0 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
 
-					if(line.startsWith(((iSx+4)+(iSs*0))+".2:")) { String[] lineTmp = line.split(","); try { tWV100 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*1))+".2:")) { String[] lineTmp = line.split(","); try { tWV150 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*2))+".2:")) { String[] lineTmp = line.split(","); try { tWV200 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*3))+".2:")) { String[] lineTmp = line.split(","); try { tWV250 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*4))+".2:")) { String[] lineTmp = line.split(","); try { tWV300 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*5))+".2:")) { String[] lineTmp = line.split(","); try { tWV350 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*6))+".2:")) { String[] lineTmp = line.split(","); try { tWV400 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*7))+".2:")) { String[] lineTmp = line.split(","); try { tWV450 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*8)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV500 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*9)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV550 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*10)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV600 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*11)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV650 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*12)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV700 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*13)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV750 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*14)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV800 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*15)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV850 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*16)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV900 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*17)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV950 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith(((iSx+4)+(iSs*18)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV1000 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
-					if(line.startsWith("62.2:")) { String[] lineTmp = line.split(","); try { tWV0 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*0))+".2:")) { String[] lineTmp = line.split(","); try { tWV100 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*1))+".2:")) { String[] lineTmp = line.split(","); try { tWV150 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*2))+".2:")) { String[] lineTmp = line.split(","); try { tWV200 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*3))+".2:")) { String[] lineTmp = line.split(","); try { tWV250 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*4))+".2:")) { String[] lineTmp = line.split(","); try { tWV300 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*5))+".2:")) { String[] lineTmp = line.split(","); try { tWV350 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*6))+".2:")) { String[] lineTmp = line.split(","); try { tWV400 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*7))+".2:")) { String[] lineTmp = line.split(","); try { tWV450 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*8)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV500 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*9)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV550 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*10)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV600 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*11)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV650 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*12)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV700 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*13)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV750 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*14)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV800 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*15)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV850 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*16)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV900 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*17)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV950 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith(((iSx+2)+(iSs*18)+1)+".2:")) { String[] lineTmp = line.split(","); try { tWV1000 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith("3.2:")) { String[] lineTmp = line.split(","); try { tWV0 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
 			
+					if(line.startsWith("4:")) { String[] lineTmp = line.split(","); try { tCAPE = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith("5:")) { String[] lineTmp = line.split(","); try { tCIN = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith("9:")) { String[] lineTmp = line.split(","); try { tPRATE = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith("6:")) { String[] lineTmp = line.split(","); try { tPWAT = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith("29:")) { String[] lineTmp = line.split(","); try { tHGT500 = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+					if(line.startsWith("10:")) { String[] lineTmp = line.split(","); try { tLI = Double.parseDouble(lineTmp[gribSpot].replace("val=", "")); } catch (ArrayIndexOutOfBoundsException aix) { aix.printStackTrace(); } }
+
 				}
 				
 			}
@@ -334,6 +346,13 @@ public class ModelWorkerHRWA {
 			if(tWS900 != 0.0001) { hrwaJSON.put("WS900_"+tFHour, tWS900); }
 			if(tWS950 != 0.0001) { hrwaJSON.put("WS950_"+tFHour, tWS950); }
 			if(tWS1000 != 0.0001) { hrwaJSON.put("WS1000_"+tFHour, tWS1000); }
+			if(tWS0 != 0.0001) { hrwaJSON.put("WS0_"+tFHour, tWS0); }
+
+			if(tCIN != 0.0001) { hrwaJSON.put("CIN_"+tFHour, tCIN); }
+			if(tLI != 0.0001) { hrwaJSON.put("LI_"+tFHour, tLI); }
+			if(tPRATE != 0.0001) { hrwaJSON.put("PRATE_"+tFHour, tPRATE*0.03937); }
+			if(tPWAT != 0.0001) { hrwaJSON.put("PWAT_"+tFHour, tPRATE*0.03937); }
+			if(tHGT500 != 0.0001) { hrwaJSON.put("HGT500_"+tFHour, tHGT500); }
 			
 			StumpJunk.runProcess("(echo \"run "+helpers.getPath()+"/ModelData.gs "+modelName+" "+tFHour4D+" "+getDate+" "+getHour+" "+xml2Path.getPath()+"\" | "+appPath.getPath()+"/grads -blc \"open "+tFHCtlFile.getPath()+"\")");								
 			
