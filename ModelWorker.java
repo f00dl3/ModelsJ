@@ -21,6 +21,8 @@ import jASUtils.ModelWorkerHRRR;
 import jASUtils.ModelWorkerHRWA;
 import jASUtils.ModelWorkerHRWN;
 import jASUtils.ModelWorkerNAM;
+import jASUtils.ModelWorkerSRFA;
+import jASUtils.ModelWorkerSRFN;
 
 public class ModelWorker {
 	
@@ -37,9 +39,11 @@ public class ModelWorker {
 		final File xml2Path = new File(ramDrive+"/modelsJ");
 		final File helpers = new File("/dev/shm/jASUtils/helpers");
 		boolean int6h = false;
+		boolean int6hO = false;
 		boolean int12h = false;
 	
 		if(getHour.equals("00") || getHour.equals("06") || getHour.equals("12") || getHour.equals("18")) { int6h = true; }
+		if(getHour.equals("03") || getHour.equals("09") || getHour.equals("15") || getHour.equals("21")) { int6hO = true; }
 		if(getHour.equals("00") || getHour.equals("12")) { int12h = true; }
 
 		final String[] hrrrArgs = { getHour, round }; ModelWorkerHRRR.main(hrrrArgs);
@@ -48,15 +52,21 @@ public class ModelWorker {
 			
 			final String[] gfsArgs = { getHour, round }; ModelWorkerGFS.main(gfsArgs);
 			final String[] namArgs = { getHour, round }; ModelWorkerNAM.main(namArgs);
-			final String[] hrwaArgs = { getHour, round }; ModelWorkerHRWA.main(hrwaArgs);
-			final String[] hrwnArgs = { getHour, round }; ModelWorkerHRWN.main(hrwnArgs);
 			
 			if(int12h) {
+				final String[] hrwaArgs = { getHour, round }; ModelWorkerHRWA.main(hrwaArgs);
+				final String[] hrwnArgs = { getHour, round }; ModelWorkerHRWN.main(hrwnArgs);
 				final String[] cmcArgs = { getHour, round }; ModelWorkerCMC.main(cmcArgs);
 			}
 			
-			
 		}
+
+		if(int6hO) {
+
+			final String[] srfaArgs = { getHour, round }; ModelWorkerSRFA.main(srfaArgs);
+			final String[] srfnArgs = { getHour, round }; ModelWorkerSRFN.main(srfnArgs);
+
+		}			
 		
 	}
 	
