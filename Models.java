@@ -116,9 +116,7 @@ public class Models {
 			String srfnJSONString = ModelShare.jsonMerge("srfn");
 			mSQLIndex = "INSERT INTO WxObs.MOS_Index (RunString, GFS, NAM4KM, RAP, CMC, HRRR, HRWA, HRWN, SRFA, SRFN) VALUES ('"+modelRunString+"',0,0,0,0,1,0,0,1,1);";
 			mSQLQuery = "INSERT INTO WxObs.KOJC_MFMD (RunString, HRRR, SRFA, SRFN) VALUES ('"+modelRunString+"','"+hrrrJSONString+"','"+srfaJSONString+"','"+srfnJSONString+"');";
-		}
-
-		if(getHour.equals("00") || getHour.equals("06") || getHour.equals("12") || getHour.equals("18")) {
+		} else if(getHour.equals("00") || getHour.equals("06") || getHour.equals("12") || getHour.equals("18")) {
 			String gfsJSONString = ModelShare.jsonMerge("gfs");
 			String namJSONString = ModelShare.jsonMerge("nam");
 			if(getHour.equals("00") || getHour.equals("12")) {
