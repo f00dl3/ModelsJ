@@ -2,11 +2,10 @@
 Java Model Data Processor
 
 Production
-2017-10-18
+2017-10-19
 
 Changes:
- - Added SREF ARW & NMB models (off-hour, 3z, 9z, 15z, and 21z runs.)
- - Fixed several GRIB2 placement bugs.
+ - Small bug fix to Models.java
  
 Still working on:
 
